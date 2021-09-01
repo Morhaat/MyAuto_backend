@@ -1,6 +1,4 @@
 const modelAnuncio = require('../models/anuncio');
-var path = require('path');
-var Client = require('ftp');
 
 module.exports = {
     async index(request, response){
@@ -22,33 +20,6 @@ module.exports = {
         const {id_anunciante, ativo, data_anuncio, titulo, veiculo, fotos} = request.body;
         console.log('Entrando...');
         console.log(fotos);
-        console.log(fotos.File);
-
-            if (!fotos){
-                console.log({error:"NoFile"});
-            }
-            else{
-                //if(path.extname(fotos.File.name) == '.jpg' || path.extname(fotos.File.name) == '.jpeg' ){
-                    var c = new Client();
-                    console.log('Inicia o Client...');  
-                    c.on('ready', function() {
-                        c.put(fotos.Url, '/_photos/fotos1', function(err) {
-                        console.log('Put...');
-                        if (err) throw err;
-                        c.end();
-                        });
-                    });
-                // connect to localhost:21 as anonymous
-                    c.connect({
-                        user:"Morhaat",
-                        password: "1234"
-                    });
-                    console.log('Conecta...');
-                /*}
-                else{
-                    console.log({error: 'Invalid File'});
-                }*/
-            }
 
         const cadAnuncio = await modelAnuncio.create({
             id_anunciante,
@@ -80,7 +51,7 @@ module.exports = {
                 cor: veiculo.cor,
 	            descricao: veiculo.descricao,
             },
-            fotos: 'uploadFoto1',
+            fotos,
         })
             return response.json({
                 value:true,

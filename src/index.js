@@ -1,12 +1,11 @@
+require('dotenv/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 const cors = require('cors');
-const google = require('googleapis');
 
 const app = express();
-
-mongoose.connect('mongodb+srv://systemMyAuto:Dboma5636Agrivalova1901@cluster0.wgd6c.mongodb.net/systemMyAuto?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGODB_ACCESS, {
     useNewUrlParser: true ,
     useUnifiedTopology: true,
 });
