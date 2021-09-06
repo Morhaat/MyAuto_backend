@@ -17,12 +17,13 @@ module.exports = {
     },
 
     async store(request, response){
-        const {id_anunciante, ativo, data_anuncio, titulo, veiculo, fotos} = request.body;
+        const {id_usuario, usuario, ativo, data_anuncio, titulo, veiculo, fotos} = request.body;
         console.log('Entrando...');
         console.log(fotos);
 
         const cadAnuncio = await modelAnuncio.create({
-            id_anunciante,
+            id_usuario,
+            usuario,
             ativo,
             data_anuncio,
             titulo, 
@@ -51,12 +52,19 @@ module.exports = {
                 cor: veiculo.cor,
 	            descricao: veiculo.descricao,
             },
-            fotos,
+            fotos:{
+                foto1: fotos.foto1,
+                foto2: fotos.foto2,
+                foto3: fotos.foto3,
+                foto4: fotos.foto4,
+                foto5: fotos.foto5,
+            },
         })
             return response.json({
                 value:true,
                 dados:"Novo",
                 caso:"Ok",
             });
+        console.log('Passou');
     }
 }

@@ -1,4 +1,3 @@
-const { now } = require("mongoose");
 const ctrlConsultas = require("../models/controleConsultas");
 const routes = require('../routes');
 
@@ -20,23 +19,22 @@ module.exports = {async store(request, response){
     }
     else{
         if(qtdConsulta < 5){
-        findUsuario = ctrlConsultas.updateOne(routes.idUsuario, {
+            findUsuario = ctrlConsultas.updateOne(routes.idUsuario, {
             $set: {
                 qtdConsulta: qtdConsulta+1,
-                dataControle: now
+                dataControle: Date.now()
             }
-        });
-        return response.json({
+            });
+            return response.json({
             value:true,
             dados:"Alterado"
-        });
-    }
-
-    else{
-        return response.json({
+            });
+        }
+        else{
+            return response.json({
             value:false,
             dados:"Excedeu o máximo permitido"});
-    }
+        }
     }
 }
 }
