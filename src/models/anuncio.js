@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const AnuncioSchema = new mongoose.Schema({
-    id_anunciante:String,
+    id_usuario:String,
+    usuario:String,
     ativo:Boolean,
     data_anuncio:Date,
     titulo:String,
@@ -30,7 +31,7 @@ const AnuncioSchema = new mongoose.Schema({
         cor:String,
 	    descricao:String,
     },
-    fotos:[{}]
+    fotos:{}
 
 })
 

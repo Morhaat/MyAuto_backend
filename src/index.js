@@ -11,8 +11,9 @@ mongoose.connect(process.env.MONGODB_ACCESS, {
 });
 
 app.use(cors({ origin: 'http://localhost:3000'}));
-app.use(express.json({limit: '50mb', extended: true}));
-app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+//app.use(cors({ origin: 'http://localhost:3000'}));
+app.use(express.json({limit: '15mb', extended: true}));
+app.use(express.urlencoded({limit: "15mb", extended: true, parameterLimit:15728640}));
 //app.use(express.json());
 app.use(routes);
 app.listen(3333);
