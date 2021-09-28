@@ -60,7 +60,8 @@ module.exports = {
                     foto4: fotos.foto4,
                     foto5: fotos.foto5,
                 },
-            })
+            });
+            modelAnuncio
                 return response.json({
                     value:true,
                     dados:"Novo",
