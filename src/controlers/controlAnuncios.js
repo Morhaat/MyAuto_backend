@@ -17,9 +17,7 @@ module.exports = {
     },
 
     async store(request, response){
-        console.log(request.size);
         const {id_usuario, usuario, ativo, data_anuncio, titulo, veiculo, fotos} = request.body;
-        console.log(fotos);
 
         try{
             const cadAnuncio = await modelAnuncio.create({

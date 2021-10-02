@@ -1,5 +1,4 @@
 const Anunciante = require('../models/anunciante');
-const crypto = require('crypto');
 
 module.exports = {
 
@@ -8,37 +7,47 @@ async index(request, response){
 },
 
 async store(request, response){
-    const {nome, cpf_cnpj, email, usuario, senha, premium, telefone1, telefone2, endereco} = request.body;
-
-    let cadAnunciante = await Anunciante.findOne({cpf_cnpj});
-
-    if (!cadAnunciante){
-        let usuAnunciante = await Anunciante.findOne({usuario});
-        if(!usuAnunciante){
-            let mailAnunciante = await Anunciante.findOne({email});
-            if (!mailAnunciante){
-                cadAnunciante = await Anunciante.create({
-                    nome,
-                    cpf_cnpj,
-                    email,
-                    usuario,
-                    senha: crypto.createHash('md5').update(senha).digest('hex'),
-                    premium,
-                    telefone1,
-                    telefone2,
-                    endereco,
-                })
-                return response.json({
-                    value:true,
-                    dados:"Novo",
-                    caso:"Ok",
-                });
+    const preTeste = request.body;
+    if (Object.keys(preTeste).length === 0){
+    return response.json({
+        value:false,
+        dados:"Falha",
+        caso:"Ausência de dados",
+    });   
+    }
+    else{
+    const {nome, email, usuario, senha, premium, telefone1, telefone2} = request.body;
+    let cadAnunciante = await Anunciante.findOne({email});
+    try{
+        if (!cadAnunciante){
+            let usuAnunciante = await Anunciante.findOne({usuario});
+            if(!usuAnunciante){
+                    cadAnunciante = await Anunciante.create({
+                        nome,
+                        email,
+                        usuario,
+                        senha,
+                        premium,
+                        telefone1:{
+                            numero: telefone1.numero,
+                            whatsapp: telefone1.whatsapp
+                        },
+                        telefone2:{
+                            numero: telefone2.numero,
+                            whatsapp: telefone2.whatsapp
+                        }
+                    })
+                    return response.json({
+                        value:true,
+                        dados:"Novo",
+                        caso:"Ok",
+                    });
             }
             else{
                 return response.json({
                     value:false,
                     dados:"Existente",
-                    caso:"Email",
+                    caso:"Usuário",
                 });
             }
         }
@@ -46,16 +55,22 @@ async store(request, response){
             return response.json({
                 value:false,
                 dados:"Existente",
-                caso:"Usuário",
+                caso:"Email",
             });
         }
     }
-    else{
+    catch{
         return response.json({
             value:false,
-            dados:"Existente",
-            caso:"Cpf_Cnpj",
+            dados:"Falha",
+            caso:"Sistema não responde",
         });
+    }
     }  
 }
+
+
+
+
+
 }
