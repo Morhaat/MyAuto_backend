@@ -12,7 +12,8 @@
     "express": "^4.17.1",
     "ftp": "^0.3.10",
     "googleapis": "39",
-    "mongoose": "^5.11.18"
+    "mongoose": "^5.11.18",
+    "react-device-detect": "^2.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

@@ -3,7 +3,46 @@ const Anunciante = require('../models/anunciante');
 module.exports = {
 
 async index(request, response){
-    
+    const preTeste = request.body;
+    const {usuario, senha} = request.body; 
+    try{
+        if (Object.keys(preTeste).length === 0){
+        return response.json({
+            value:false,
+            dados:"Falha",
+            caso:"Ausência de dados",
+        });   
+            }
+        else{
+        let login = await Anunciante.findOne({usuario, senha});
+        if(!login){
+            return response.json({
+                value:false,
+                dados:"Falha",
+                caso:"Usuário não existe!",
+            });    
+        }
+        else{
+            const {_id, usuario, premium, telefone1, telefone2} = login;
+            return response.json({
+                value:true,
+                login: {
+                    _id,
+                    usuario,
+                    premium,
+                    telefone1,
+                    telefone2
+                }
+            });     
+        }
+        }
+    }catch{
+        return response.json({
+            value:false,
+            dados:"Falha",
+            caso:"Sistema não responde",
+        });
+    }
 },
 
 async store(request, response){
