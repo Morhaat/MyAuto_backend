@@ -16,4 +16,4 @@ app.use(express.json({limit: '15mb', extended: true}));
 app.use(express.urlencoded({limit: "15mb", extended: true, parameterLimit:15728640}));
 //app.use(express.json());
 app.use(routes);
-app.listen(3333);
+app.listen(process.env.PORT || 3333);
