@@ -1,40 +1,47 @@
 const Anunciante = require('../models/anunciante');
+const jwt = require('jsonwebtoken');
+const { options } = require('../routes');
+require('dotenv/config');
 
 module.exports = {
 
 async index(request, response){
-    const preTeste = request.body;
-    const {usuario, senha} = request.body; 
+    const [hashType, hash] = request.headers.authorization.split(' ');
+    const [usuario, senha] = Buffer.from(hash, 'base64').toString().split(':'); 
+    
     try{
-        if (Object.keys(preTeste).length === 0){
-        return response.json({
-            value:false,
-            dados:"Falha",
-            caso:"Ausência de dados",
-        });   
-            }
-        else{
-        let login = await Anunciante.findOne({usuario, senha});
-        if(!login){
+        if (Object.keys(senha).length === null){
             return response.json({
                 value:false,
                 dados:"Falha",
-                caso:"Usuário não existe!",
-            });    
+                caso:"Ausência de dados",
+            });   
         }
         else{
-            const {_id, usuario, premium, telefone1, telefone2} = login;
-            return response.json({
-                value:true,
-                login: {
-                    _id,
-                    usuario,
-                    premium,
-                    telefone1,
-                    telefone2
-                }
-            });     
-        }
+            let login = await Anunciante.findOne({usuario, senha});
+            if(!login){
+                return response.json({
+                    value:false,
+                    dados:"Falha",
+                    caso:"Usuário não existe!",
+                });    
+            }
+            else{
+                const {_id, usuario, premium, telefone1, telefone2} = login;
+                const token = jwt.sign({user: _id}, process.env.cryptoJwt, {expiresIn:'20m'});
+//
+                return response.json({
+                    value:true,
+                    login: {
+                        _id,
+                        usuario,
+                        premium,
+                        telefone1,
+                        telefone2
+                    },
+                    token
+                });    
+            }
         }
     }catch{
         return response.json({
@@ -47,6 +54,7 @@ async index(request, response){
 
 async store(request, response){
     const preTeste = request.body;
+    console.log(preTeste);
     if (Object.keys(preTeste).length === 0){
     return response.json({
         value:false,
