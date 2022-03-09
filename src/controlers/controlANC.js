@@ -1,6 +1,5 @@
 const Anunciante = require('../models/anunciante');
 const jwt = require('jsonwebtoken');
-const { options } = require('../routes');
 require('dotenv/config');
 
 module.exports = {
@@ -23,12 +22,12 @@ async index(request, response){
                 return response.json({
                     value:false,
                     dados:"Falha",
-                    caso:"Usuário não existe!",
+                    caso:"Dados incorretos",
                 });    
             }
             else{
                 const {_id, usuario, premium, telefone1, telefone2} = login;
-                const token = jwt.sign({user: _id}, process.env.cryptoJwt, {expiresIn:'20m'});
+                const token = jwt.sign({login}, process.env.cryptoJwt, {expiresIn:'20m'});
 //
                 return response.json({
                     value:true,
