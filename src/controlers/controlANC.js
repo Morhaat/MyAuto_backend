@@ -26,18 +26,16 @@ async index(request, response){
                 });    
             }
             else{
-                const {_id, usuario, premium, telefone1, telefone2} = login;
-                const token = jwt.sign({login}, process.env.cryptoJwt, {expiresIn:'20m'});
+                const _login = {
+                    value:true,
+                    login:login
+                };
+                // {_id, usuario, premium, telefone1, telefone2}
+                const token = jwt.sign({_login}, process.env.cryptoJwt, {expiresIn:'20m'});
 //
                 return response.json({
                     value:true,
-                    login: {
-                        _id,
-                        usuario,
-                        premium,
-                        telefone1,
-                        telefone2
-                    },
+                    login:_login.login,
                     token
                 });    
             }
