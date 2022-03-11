@@ -7,7 +7,7 @@ module.exports = {
 async index(request, response){
     const [hashType, hash] = request.headers.authorization.split(' ');
     const [usuario, senha] = Buffer.from(hash, 'base64').toString().split(':'); 
-    
+    console.log(hashType);
     try{
         if (Object.keys(senha).length === null){
             return response.json({
