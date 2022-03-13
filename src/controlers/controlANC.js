@@ -28,7 +28,6 @@ async index(request, response){
             else{
                const {_id, usuario, premium, telefone1, telefone2} = login;
                 const user = {
-                    value:true,
                     _id,
                     usuario,
                     premium,
