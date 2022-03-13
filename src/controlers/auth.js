@@ -1,6 +1,3 @@
-//const { index } = require('./controlANC');
-//const routes = require('./controlANC');
-const req = require('express/lib/request');
 const jwt = require('jsonwebtoken');
 
 module.exports ={
@@ -12,7 +9,7 @@ module.exports ={
                 return response.sendStatus(403)
             }
             else{
-                return response.json({user})
+                return response.json(user);
             }  
         });
     }
