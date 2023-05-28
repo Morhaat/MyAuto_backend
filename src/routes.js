@@ -10,7 +10,7 @@ const routes = Router();
 
 routes.post('/upload', uploadFotos.UploadToFtp);
 routes.get('/list', uploadFotos.ListArquivos);
-routes.post('/login', controlANC.index);
+routes.get('/login', controlANC.index);
 routes.get('/singing', controlANC.index);
 routes.get('/validating', verifyToken.validating);
 routes.get('/anuncios', controlAnuncios.index);

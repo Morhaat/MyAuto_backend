@@ -7,7 +7,7 @@ module.exports = {
 async index(request, response){
     const [hashType, hash] = request.headers.authorization.split(' ');
     const [usuario, senha] = Buffer.from(hash, 'base64').toString().split(':'); 
-    console.log(hashType);
+    console.log({hashType, hash, usuario, senha});
     try{
         if (Object.keys(senha).length === null){
             return response.json({
@@ -35,7 +35,7 @@ async index(request, response){
                     telefone2
                 };
                 // {_id, usuario, premium, telefone1, telefone2}
-                const token = jwt.sign({user}, process.env.cryptoJwt, {expiresIn:'20m'});
+                const token = jwt.sign({user}, process.env.cryptoJwt, {expiresIn:'2m'});
 //
                 return response.json({
                     value:true,
