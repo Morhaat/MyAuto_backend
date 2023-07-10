@@ -13,7 +13,7 @@ routes.get('/list', uploadFotos.ListArquivos);
 routes.get('/login', controlANC.index);
 routes.get('/singing', controlANC.index);
 routes.get('/validating', verifyToken.validating);
-routes.get('/anuncios', controlAnuncios.index);
+routes.post('/anuncios', controlAnuncios.index);
 routes.post('/cadastro', controlANC.store);
 routes.put('/controleConsultas', controleConsultas.store);
 routes.post('/cadastroAnuncio', controlAnuncios.store);

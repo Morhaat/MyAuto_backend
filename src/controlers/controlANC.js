@@ -35,7 +35,7 @@ async index(request, response){
                     telefone2
                 };
                 // {_id, usuario, premium, telefone1, telefone2}
-                const token = jwt.sign({user}, process.env.cryptoJwt, {expiresIn:'2m'});
+                const token = jwt.sign({user}, process.env.cryptoJwt, {expiresIn:'20m'});
 //
                 return response.json({
                     value:true,

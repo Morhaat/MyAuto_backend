@@ -3,14 +3,14 @@ const modelAnuncio = require('../models/anuncio');
 module.exports = {
     async index(request, response){
         let filtros = request.body;
-        console.log(request.body);
+        console.log(filtros);
         let resultFiltro;
         if (Object.keys(filtros).length === 0){
             resultFiltro = await modelAnuncio.find();   
         }
         else{
             //resultFiltro = await modelAnuncio.findOne(filtros);
-            resultFiltro = await modelAnuncio.find(filtros);  
+            resultFiltro = await modelAnuncio.find(filtros.filtro);  
         }
         return response.json({resultFiltro});
 
